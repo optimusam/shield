@@ -1,14 +1,16 @@
 const user = (sequelize, DataTypes) => {
 
     const User = sequelize.define('user', {
+        name: {
+            type: DataTypes.STRING,
+        },
         username: {
             type: DataTypes.STRING,
             unique: true,
             allowNull: false
         },
-        password: {
+        picture: {
             type: DataTypes.STRING,
-            allowNull: false
         },
         lastLogin: {
             type: DataTypes.DATE

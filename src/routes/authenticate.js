@@ -1,6 +1,5 @@
 import {Router} from 'express'
 import models from '../models'
-import user from '../models/user'
 import {Op} from 'sequelize'
 
 

@@ -6,7 +6,8 @@ import pug from 'pug'
 import path from 'path'
 import createUsersWithFiles from './models/seed'
 import userInViews from './lib/middleware/userInViews'
-import models, { sequelize } from './models';
+// import secured from './lib/middleware/secured'
+import models, { sequelize } from './models'
 import routes from './routes'
 
 const app = express();
@@ -81,7 +82,8 @@ app.use(userInViews())
 app.use('/', routes.authRoute)
 app.use('/', routes.indexRoute)
 app.use('/', routes.usersRoute)
-
+app.use('/', routes.dashboardRoute)
+app.use('/', routes.createRoute)
 const eraseDatabaseOnSync = false;
 sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
     if (eraseDatabaseOnSync) {
@@ -89,6 +91,6 @@ sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
     }
 
     app.listen(process.env.PORT, () =>
-        console.log(`Example app listening on port ${process.env.PORT}!`),
+        console.log(`app listening on port ${process.env.PORT}!`),
     );
 });

@@ -1,0 +1,14 @@
+extends layout
+
+block content 
+    .container
+        h3 Create a Vault
+        form(action="/createFile", method='post')
+            .formgroup 
+                label(for='vaultname') Vault Name
+                input.form-control#vaultname(type='text' name='vaultname' required)
+
+            .formgroup 
+                label(for='link') Link to Files
+                input.form-control#link(type='text' name='link' required)
+            button.btn.btn-primary(type='submit') Submit
