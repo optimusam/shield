@@ -1,6 +1,9 @@
-import authenticate from './authenticate'
-import user from './user'
+import usersRoute from './users'
+import indexRoute from './home'
+import authRoute from './auth'
+
 export default {
-    authenticate,
-    user
+    authRoute,
+    usersRoute,
+    indexRoute
 }
