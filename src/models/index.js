@@ -19,7 +19,8 @@ sequelize
 
 const models = {
     User: sequelize.import('./user'),
-    File: sequelize.import('./file.js')
+    File: sequelize.import('./file'),
+    FileQueue: sequelize.import('./fileQueue')
 };
 
 Object.keys(models).forEach(key => {

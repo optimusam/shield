@@ -1,9 +1,61 @@
 let delBtns = document.querySelectorAll('.delBtn')
 let queueBtns = document.querySelectorAll('.queueBtn')
+let unqueueBtns = document.querySelectorAll('.unqueueBtn')
+
 let container = document.querySelector('.container')
 delBtns.forEach(btn => btn.addEventListener('click', deleteVault))
+queueBtns.forEach(btn => btn.addEventListener('click', queueVault))
+unqueueBtns.forEach(btn => btn.addEventListener('click', unqueueVault))
 
-// queueBtns.forEach(btn => btn.addEventListener('click', queueVault))
+async function unqueueVault() {
+    const [name, id] = this.id.split('-')
+    console.log(name)
+    console.log(id)
+    try {
+        const response = await fetch(`/queue/${id}`, {
+            method: 'DELETE'
+        })
+        const data = await response.json()
+        const toast = showToast(data.message)
+        container.insertAdjacentHTML('afterbegin', toast)
+        $('.toast').toast('show')
+        const queueBtn  = document.createElement('button')
+        queueBtn.classList.add("button", "btn", "btn-success", "queueBtn")
+        queueBtn.name = id
+        queueBtn.id=`queue-${id}`
+        queueBtn.textContent = "Queue"
+        this.parentNode.appendChild(queueBtn)
+        queueBtn.addEventListener('click', queueVault)
+        this.parentNode.removeChild(this)
+    }
+    catch (err) {
+        console.log(err)
+    }
+}
+
+async function queueVault() {
+    const id = this.id.split('-')[1]
+    try {
+        const response = await fetch(`/queue/${id}`, {
+            method: 'POST'
+        })
+        const data = await response.json()
+        const toast = showToast(data.message)
+        container.insertAdjacentHTML('afterbegin', toast)
+        $('.toast').toast('show')
+        const unqueueBtn = document.createElement('button')
+        unqueueBtn.classList.add("button", "btn", "btn-warning", "unqueueBtn")
+        unqueueBtn.name = id
+        unqueueBtn.id = `unqueue-${id}`
+        unqueueBtn.textContent = "Unqueue"
+        this.parentNode.appendChild(unqueueBtn)
+        unqueueBtn.addEventListener('click', unqueueVault)
+        this.parentNode.removeChild(this)
+    }
+    catch (err) {
+        console.log(err)
+    }
+}
 
 async function deleteVault() {
     const id = this.id.split('-')[1]

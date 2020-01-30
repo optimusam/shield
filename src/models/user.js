@@ -4,7 +4,7 @@ const user = (sequelize, DataTypes) => {
         name: {
             type: DataTypes.STRING,
         },
-        username: {
+        authId: {
             type: DataTypes.STRING,
             unique: true,
             allowNull: false
@@ -19,11 +19,12 @@ const user = (sequelize, DataTypes) => {
 
     User.associate = models => {
         User.hasMany(models.File, { onDelete: 'CASCADE' });
+        User.hasMany(models.FileQueue, { onDelete: 'CASCADE' });
     };
 
     User.findByLogin = async login => {
         let user = await User.findOne({
-            where: { username: login },
+            where: { authId: login },
         });
         return user;
     };

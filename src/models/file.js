@@ -7,14 +7,12 @@ const file = (sequelize, DataTypes) => {
         link: {
             type: DataTypes.STRING,
             allowNull: false
-        },
-        username: {
-            type: DataTypes.STRING,
         }
     });
 
     File.associate = models => {
-        File.belongsTo(models.User);
+        File.belongsTo(models.User)
+        File.hasOne(models.FileQueue)
     };
     
     return File;

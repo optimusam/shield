@@ -3,7 +3,7 @@ import models, { sequelize } from './index';
 const createUsersWithFiles = async () => {
   await models.User.create(
     {
-      username: 'sameer',
+      authId: 'sameer',
       files: [
         {
           vaultname: 'Published the Road to learn React',
@@ -18,7 +18,7 @@ const createUsersWithFiles = async () => {
 
   await models.User.create(
     {
-      username: 'ddavids',
+      authId: 'ddavids',
       files: [
         {
           vaultname: 'nsa hack',

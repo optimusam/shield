@@ -2,11 +2,12 @@ import usersRoute from './users'
 import indexRoute from './home'
 import authRoute from './auth'
 import dashboardRoute from './dashboard'
-import createRoute from './create'
+import fileRoute from './file'
+import fileQueueRoute from './fileQueue'
 export default {
     authRoute,
     usersRoute,
     indexRoute,
     dashboardRoute,
-    createRoute
+    fileRoute, fileQueueRoute
 }

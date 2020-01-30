@@ -15,6 +15,7 @@ const app = express();
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('src/public'))
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
 
@@ -83,7 +84,9 @@ app.use('/', routes.authRoute)
 app.use('/', routes.indexRoute)
 app.use('/', routes.usersRoute)
 app.use('/', routes.dashboardRoute)
-app.use('/', routes.createRoute)
+app.use('/', routes.fileRoute)
+app.use('/', routes.fileQueueRoute)
+
 const eraseDatabaseOnSync = false;
 sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
     if (eraseDatabaseOnSync) {

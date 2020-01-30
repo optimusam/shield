@@ -1,4 +1,5 @@
 // routes/auth.js
+import models from '../models'
 
 var express = require('express')
 var router = express.Router()
@@ -30,10 +31,42 @@ router.get('/callback', function(req, res, next) {
     if (!user) {
       return res.redirect('/login')
     }
-    req.logIn(user, function(err) {
+    req.logIn(user, async function(err) {
       if (err) {
         return next(err)
       }
+
+      // checking if the user exits 
+      const user_id = req.user.user_id
+      const userInDB = await models.User.findOne({
+        where: { authId: user_id }
+      })
+
+      if (!userInDB) {
+        try {
+          const newUser = await models.User.create({
+            name: req.user.displayName,
+            picture: req.user.picture,
+            authId: req.user.user_id,
+            lastLogin: new Date()
+          })
+
+          req.user.userId = newUser.id
+        }
+        catch (err) {
+          console.error('could not fetch current user')
+        }
+      }
+      else {
+        try {
+          await userInDB.update({ lastLogin: new Date() })
+          req.user.userId = userInDB.id
+        }
+        catch (err) {
+          console.error('could not update last login')
+        }
+      }
+
       const returnTo = req.session.returnTo
       delete req.session.returnTo
       res.redirect(returnTo || '/user')

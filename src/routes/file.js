@@ -1,12 +1,10 @@
 import {Router} from 'express'
 import models from '../models'
 import secured from '../lib/middleware/secured'
-import {Op} from 'sequelize'
 
 const router = Router()
 
 router.post('/file', secured(), async (req, res) => {
-    console.log("here at file")
     const vaultname = req.body.vaultname
     const link = req.body.link
     try {
@@ -34,7 +32,7 @@ router.delete('/file/:id', secured(), async(req, res) => {
         res.json({message: 'Deleted successfully'})
     }
     catch(err) {
-        res.json({message: err})
+        res.json({message: err.message})
     }
 })
 

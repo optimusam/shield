@@ -2,8 +2,23 @@ extends layout
 
 block content 
     .container
-        h3 Create a Vault
-        form(action="/createFile", method='post')
+        h2 Your Vault
+        each file in files
+            .card(style="width: 18rem;")
+                .card-body
+                    h5.card-title #{file.vaultname}
+                    p.card-text Fake ass description
+                    button.btn.btn-danger.delBtn(name=`${file.id}` id=`del-${file.id}`) Delete
+                    if file.filequeue
+                        button.btn.btn-warning.unqueueBtn(name=`${file.id}`, id=`unqueue-${file.id}`) Unqueue
+                    else
+                        button.btn.btn-success.queueBtn(name=`${file.id}`, id=`queue-${file.id}`) Queue
+
+
+
+
+        h2 Create a Vault
+        form(action="/file", method='post')
             .formgroup 
                 label(for='vaultname') Vault Name
                 input.form-control#vaultname(type='text' name='vaultname' required)
@@ -12,3 +27,5 @@ block content
                 label(for='link') Link to Files
                 input.form-control#link(type='text' name='link' required)
             button.btn.btn-primary(type='submit') Submit
+        
+    script(src="/scripts/script.js")
