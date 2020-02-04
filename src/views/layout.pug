@@ -16,12 +16,11 @@ html
 
       .collapse.navbar-collapse#navbarNav
         ul.navbar-nav
-          li.nav-item.active
-            a.nav-link(href="/") Home
-
           if locals.user
             li.nav-item
               a.nav-link(href="/dashboard") Dashboard
+            li.nav-item
+              a.nav-link(href="/vault") My Vaults              
             li.nav-item
                 a.nav-link(href="/user") Profile
             li.nav-item

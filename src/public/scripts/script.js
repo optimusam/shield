@@ -68,6 +68,7 @@ async function deleteVault() {
         this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)
         container.insertAdjacentHTML('afterbegin', toast)
         $('.toast').toast('show')
+        // setTimeout(() => )
         
     }
     catch(err) {

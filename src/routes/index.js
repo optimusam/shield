@@ -1,13 +1,17 @@
 import usersRoute from './users'
-import indexRoute from './home'
 import authRoute from './auth'
 import dashboardRoute from './dashboard'
 import fileRoute from './file'
 import fileQueueRoute from './fileQueue'
+import vaultRoute from './vault'
+import indexRoute from './home'
+
 export default {
     authRoute,
     usersRoute,
-    indexRoute,
     dashboardRoute,
-    fileRoute, fileQueueRoute
+    fileRoute,
+    fileQueueRoute,
+    vaultRoute,
+    indexRoute
 }

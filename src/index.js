@@ -2,13 +2,12 @@ import express from 'express';
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import 'dotenv/config'
-import pug from 'pug'
 import path from 'path'
 import createUsersWithFiles from './models/seed'
 import userInViews from './lib/middleware/userInViews'
-// import secured from './lib/middleware/secured'
 import models, { sequelize } from './models'
 import routes from './routes'
+import sgMail from '@sendgrid/mail'
 
 const app = express();
 
@@ -80,12 +79,40 @@ passport.deserializeUser(function (user, done) {
 });
 
 app.use(userInViews())
-app.use('/', routes.authRoute)
 app.use('/', routes.indexRoute)
-app.use('/', routes.usersRoute)
+app.use('/', routes.authRoute)
 app.use('/', routes.dashboardRoute)
+app.use('/', routes.usersRoute)
 app.use('/', routes.fileRoute)
 app.use('/', routes.fileQueueRoute)
+app.use('/', routes.vaultRoute)
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+// running every 7 days
+// setInterval(async () => {
+
+//     const res = await models.FileQueue.findAll({
+//         where: {
+//             status: "enqueued"
+//         },
+//         include: [models.File]
+//     })
+
+//     for(const fileDetails of res) {
+//         const msg = {
+//             to: 'sameergiri1997@gmail.com',
+//             from: 'test@shield.com',
+//             subject: fileDetails.file.vaultname,
+//             text: 'Hi there',
+//             html: `<p>${fileDetails.file.link}</p> 
+//             <p><strong>Test Email Sent by Shield Investigations</strong></p>`,
+//         };
+//         sgMail.send(msg)
+//         console.log(msg.subject)
+//     }
+    
+// }, 604800000)
 
 const eraseDatabaseOnSync = false;
 sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
