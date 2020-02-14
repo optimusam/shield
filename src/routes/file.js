@@ -7,12 +7,15 @@ const router = Router()
 router.post('/file', secured(), async (req, res) => {
     const vaultname = req.body.vaultname
     const link = req.body.link
+    const emailTo  = req.body.emailTo
     try {
         await models.File.create({
             vaultname: vaultname, 
             link: link,
-            userId: req.user.userId
+            userId: req.user.userId,
+            emailTo: emailTo
         })
+        req.flash('message', 'Vault Created')
         res.redirect('/dashboard')
     }
     catch (err) {

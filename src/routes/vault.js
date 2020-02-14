@@ -14,7 +14,7 @@ router.get('/vault', secured(), async (req, res) => {
 
     res.render('vault', {
         title: 'My Vaults',
-        files: files
+        files: files,
     })
 })
 

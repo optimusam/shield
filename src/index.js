@@ -1,3 +1,4 @@
+// module import
 import express from 'express';
 import bodyParser from 'body-parser'
 import cors from 'cors'
@@ -8,9 +9,13 @@ import userInViews from './lib/middleware/userInViews'
 import models, { sequelize } from './models'
 import routes from './routes'
 import sgMail from '@sendgrid/mail'
+import {Op} from 'sequelize'
+import flash from 'express-flash'
 
+// app creation
 const app = express();
 
+// middleware used
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -78,6 +83,8 @@ passport.deserializeUser(function (user, done) {
   done(null, user);
 });
 
+app.use(flash())
+//route handler
 app.use(userInViews())
 app.use('/', routes.indexRoute)
 app.use('/', routes.authRoute)
@@ -90,29 +97,34 @@ app.use('/', routes.vaultRoute)
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // running every 7 days
-// setInterval(async () => {
+setInterval(async () => {
 
-//     const res = await models.FileQueue.findAll({
-//         where: {
-//             status: "enqueued"
-//         },
-//         include: [models.File]
-//     })
+    const res = await models.FileQueue.findAll({
+        where: {
+            status: "enqueued",
+            sendAt: {
+              [Op.gt] : new Date()
+            }
+        },
+        include: [models.File]
+    })
 
-//     for(const fileDetails of res) {
-//         const msg = {
-//             to: 'sameergiri1997@gmail.com',
-//             from: 'test@shield.com',
-//             subject: fileDetails.file.vaultname,
-//             text: 'Hi there',
-//             html: `<p>${fileDetails.file.link}</p> 
-//             <p><strong>Test Email Sent by Shield Investigations</strong></p>`,
-//         };
-//         sgMail.send(msg)
-//         console.log(msg.subject)
-//     }
+    for(const fileDetails of res) {
+        const msg = {
+            to: 'sameergiri1997@gmail.com',
+            from: 'test@shield.com',
+            subject: fileDetails.file.vaultname,
+            text: 'Hi there',
+            html: `
+            <p>
+            <p>${fileDetails.file.link}</p> 
+            <p><strong>Test Email Sent by Shield Investigations</strong></p>`,
+        };
+        sgMail.send(msg)
+        console.log(msg.subject)
+    }
     
-// }, 604800000)
+}, 604800000)
 
 const eraseDatabaseOnSync = false;
 sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {

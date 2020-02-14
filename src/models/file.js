@@ -7,6 +7,9 @@ const file = (sequelize, DataTypes) => {
         link: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        emailTo: {
+            type: DataTypes.ARRAY(DataTypes.STRING)
         }
     });
 

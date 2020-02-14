@@ -81,7 +81,7 @@ function showToast(message) {
     const toast = `
     <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000">
         <div class="toast-header">
-            <img src="..." class="rounded mr-2" alt="...">
+            <img src="images/shield.png" class="rounded mr-2" alt="..." width="50px" height="50px">
             <strong class="mr-auto">Shield</strong>
             <small>11 mins ago</small>
             <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
