@@ -103,8 +103,8 @@ setInterval(async () => {
         where: {
             status: "enqueued",
             sendAt: {
-              [Op.gt] : new Date()
-            }
+              [Op.lt] : new Date()
+            }   
         },
         include: [models.File]
     })
@@ -120,11 +120,14 @@ setInterval(async () => {
             <p>${fileDetails.file.link}</p> 
             <p><strong>Test Email Sent by Shield Investigations</strong></p>`,
         };
-        sgMail.send(msg)
+        await sgMail.send(msg)
         console.log(msg.subject)
+        await fileDetails.update({status: 'sent'})
     }
     
 }, 604800000)
+
+// 604800000
 
 const eraseDatabaseOnSync = false;
 sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {

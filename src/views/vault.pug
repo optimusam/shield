@@ -12,8 +12,13 @@ block content
                         a(href=`${file.link}`) Click here to access Vault
                     button.btn.btn-danger.delBtn(name=`${file.id}` id=`del-${file.id}`) Delete
                     if file.filequeue
-                        p.card-text To be sent at #{file.filequeue.sendAt}
-                        button.btn.btn-warning.unqueueBtn(name=`${file.id}`, id=`unqueue-${file.id}`) Unqueue
+                        if file.filequeue.status === "enqueued"
+                            p.card-text To be sent at #{file.filequeue.sendAt}
+                            button.btn.btn-warning.unqueueBtn(name=`${file.id}`, id=`unqueue-${file.id}`) Unqueue
+                        else 
+                            p.card-text 
+                                strong SENT ALREADY
+                            button.btn.btn-warning.unqueueBtn(name=`${file.id}`, id=`unqueue-${file.id}`) Unqueue
                     else
                         button.btn.btn-success.queueBtn(name=`${file.id}`, id=`queue-${file.id}`) Queue
     
