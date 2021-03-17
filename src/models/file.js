@@ -15,7 +15,7 @@ const file = (sequelize, DataTypes) => {
 
     File.associate = models => {
         File.belongsTo(models.User)
-        File.hasOne(models.FileQueue)
+        File.hasOne(models.FileQueue, { onDelete: 'CASCADE'})
     };
     
     return File;

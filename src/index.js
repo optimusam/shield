@@ -4,7 +4,6 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 import 'dotenv/config'
 import path from 'path'
-import createUsersWithFiles from './models/seed'
 import userInViews from './lib/middleware/userInViews'
 import models, { sequelize } from './models'
 import routes from './routes'
@@ -98,42 +97,49 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // running every 7 days
 setInterval(async () => {
+    console.log('30 secs passed')
 
-    const res = await models.FileQueue.findAll({
-        where: {
-            status: "enqueued",
-            sendAt: {
-              [Op.lt] : new Date()
-            }   
-        },
-        include: [models.File]
-    })
-
-    for(const fileDetails of res) {
+    try {
+      const res = await models.FileQueue.findAll({
+          where: {
+              status: "enqueued",
+              sendAt: {
+                [Op.lt] : new Date()
+              }   
+          },
+          include: [models.File]
+      })
+      const promises = res.map( async (fileDetails) => {
+        const emailIds = fileDetails.file.emailTo;
+        console.log(emailIds)
         const msg = {
-            to: 'sameergiri1997@gmail.com',
-            from: 'test@shield.com',
-            subject: fileDetails.file.vaultname,
-            text: 'Hi there',
-            html: `
-            <p>
-            <p>${fileDetails.file.link}</p> 
-            <p><strong>Test Email Sent by Shield Investigations</strong></p>`,
-        };
+                    to: [{email: emailIds[0]}, {email: emailIds[1]}, {email: emailIds[2]}],
+                    from: 'test@shield.com',
+                    subject: `Vault ${fileDetails.file.vaultname} sent by Shield Whistleblower Systems`,
+                    text: 'Yohooo',
+                    html: `
+                    <p> You have been sent access to the the vault ${fileDetails.file.vaultname} by an anonymous whistleblower.</p>
+                    <p>${fileDetails.file.link}</p> 
+                    <p><strong>Test Email Sent by Shield Whistleblower Systems</strong></p>`,
+                };
         await sgMail.send(msg)
-        console.log(msg.subject)
+        console.log(fileDetails.file.vaultname, 'sent')
         await fileDetails.update({status: 'sent'})
+        console.log('fileDetails.file.vaultname', 'updated as sent')
+      });
+    await Promise.all(promises);
+   } catch (e) {
+      console.error('could not resolve promise', e);
     }
-    
 }, 604800000)
 
-// 604800000
+// 604800000 ms = 7 days
 
 const eraseDatabaseOnSync = false;
 sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
-    if (eraseDatabaseOnSync) {
-        createUsersWithFiles();
-    }
+    // if (eraseDatabaseOnSync) {
+    //     createUsersWithFiles();
+    // }
 
     app.listen(process.env.PORT, () =>
         console.log(`app listening on port ${process.env.PORT}!`),
