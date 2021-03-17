@@ -14,6 +14,7 @@ block content
                 label(for='link') Link to Files
                 input.form-control#link(type='text' name='link' required)
             h3 Mail to: 
+            p Please select 3 options
             each outlet in mediaOutlets
                 .form-check
                     input.form-check-input(type='checkbox' name='emailTo' id=`check-${num}` value=`${outlet.email}`)

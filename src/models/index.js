@@ -1,11 +1,15 @@
 import Sequelize from 'sequelize';
 
 const sequelize = new Sequelize(
-    process.env.DATABASE,
-    process.env.DATABASE_USER,
-    process.env.DATABASE_PASSWORD,
-    {
+    process.env.HEROKU_POSTGRESQL_URL,
+    {   
+        host: process.env.HEROKU_POSTGRESQL_HOST,
+        port: 5432,
         dialect: 'postgres',
+        protocol: 'postgres',
+        dialectOptions: {
+            ssl: true
+        }   
     },
 );
 sequelize

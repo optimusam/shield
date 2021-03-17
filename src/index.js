@@ -115,12 +115,14 @@ setInterval(async () => {
         const msg = {
                     to: [{email: emailIds[0]}, {email: emailIds[1]}, {email: emailIds[2]}],
                     from: 'test@shield.com',
-                    subject: `Vault ${fileDetails.file.vaultname} sent by Shield Whistleblower Systems`,
-                    text: 'Yohooo',
+                    subject: `Vault ${fileDetails.file.vaultname} sent by Shield Whistleblower System`,
+                    text: 'Hi there',
                     html: `
+                    <p>Hi there.</p>
                     <p> You have been sent access to the the vault ${fileDetails.file.vaultname} by an anonymous whistleblower.</p>
                     <p>${fileDetails.file.link}</p> 
-                    <p><strong>Test Email Sent by Shield Whistleblower Systems</strong></p>`,
+                    <p>Shield Whistleblower System is a secure and anonymous way to send evidence to news media outlets by people who want to bring evidence and news to light without the fear of threats to their life and identity.</p>
+                    <p><strong>Mail Sent by Shield Whistleblower System</strong></p>`,
                 };
         await sgMail.send(msg)
         console.log(fileDetails.file.vaultname, 'sent')
@@ -131,7 +133,9 @@ setInterval(async () => {
    } catch (e) {
       console.error('could not resolve promise', e);
     }
-}, 604800000)
+}, 1680000)
+
+// 1680000 ms = 28 mins
 
 // 604800000 ms = 7 days
 
