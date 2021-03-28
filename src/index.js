@@ -1,31 +1,30 @@
 // module import
 import express from 'express';
-import bodyParser from 'body-parser'
 import cors from 'cors'
-import 'dotenv/config'
+import dotenv  from 'dotenv'
 import path from 'path'
-import userInViews from './lib/middleware/userInViews'
-import models, { sequelize } from './models'
-import routes from './routes'
+import userInViews from './lib/middleware/userInViews.js'
+import models, { sequelize } from './models/index.js'
+import routes from './routes/index.js'
 import sgMail from '@sendgrid/mail'
-import {Op} from 'sequelize'
+import pkg from 'sequelize'
 import flash from 'express-flash'
 
+dotenv.config()
 // app creation
 const app = express();
-
+const {Op} = pkg;
 // middleware used
 app.use(cors())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static('src/public'))
-app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
 
+const __dirname = path.resolve();
 // app.js
-
-var session = require('express-session');
-
+app.set('views', path.join(__dirname, './src/views'))
+import session from 'express-session'
 // config express-session
 var sess = {
     secret: process.env.secret,
@@ -47,8 +46,8 @@ if (app.get('env') === 'production') {
 app.use(session(sess));
 
 // Load Passport
-var passport = require('passport');
-var Auth0Strategy = require('passport-auth0');
+import passport from 'passport'
+import Auth0Strategy from 'passport-auth0'
 
 // Configure Passport to use Auth0
 var strategy = new Auth0Strategy(
@@ -95,9 +94,9 @@ app.use('/', routes.vaultRoute)
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-// running every 7 days
+// running every 28 minutes
 setInterval(async () => {
-    console.log('30 secs passed')
+    console.log('28 minutes passed')
 
     try {
       const res = await models.FileQueue.findAll({
@@ -140,12 +139,13 @@ setInterval(async () => {
 // 604800000 ms = 7 days
 
 const eraseDatabaseOnSync = false;
+const PORT = process.env.PORT || 3000;
 sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
     // if (eraseDatabaseOnSync) {
     //     createUsersWithFiles();
     // }
 
-    app.listen(process.env.PORT, () =>
-        console.log(`app listening on port ${process.env.PORT}!`),
+    app.listen(PORT, () =>
+        console.log(`app listening on port ${PORT}!`),
     );
 });

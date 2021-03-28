@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import models from '../models'
-import secured from '../lib/middleware/secured'
+import models from '../models/index.js'
+import secured from '../lib/middleware/secured.js'
 
 const router = Router()
 

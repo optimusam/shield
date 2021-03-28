@@ -1,4 +1,4 @@
-module.exports = function() {
+export default function() {
   return function secured(req, res, next) {
     if (req.user) {
       return next()

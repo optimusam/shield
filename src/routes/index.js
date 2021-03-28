@@ -1,10 +1,10 @@
-import usersRoute from './users'
-import authRoute from './auth'
-import dashboardRoute from './dashboard'
-import fileRoute from './file'
-import fileQueueRoute from './fileQueue'
-import vaultRoute from './vault'
-import indexRoute from './home'
+import usersRoute from './users.js'
+import authRoute from './auth.js'
+import dashboardRoute from './dashboard.js'
+import fileRoute from './file.js'
+import fileQueueRoute from './fileQueue.js'
+import vaultRoute from './vault.js'
+import indexRoute from './home.js'
 
 export default {
     authRoute,

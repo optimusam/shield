@@ -1,7 +1,7 @@
 // routes/users.js
 
-var express = require('express')
-var secured = require('../lib/middleware/secured')
+import express from 'express'
+import secured from '../lib/middleware/secured.js'
 var router = express.Router()
 
 /* GET user profile. */
@@ -13,4 +13,4 @@ router.get('/user', secured(), function(req, res, next) {
   })
 })
 
-module.exports = router
+export default router

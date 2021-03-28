@@ -1,6 +1,6 @@
 import {Router} from 'express'
-import secured from '../lib/middleware/secured'
-import models from '../models'
+import secured from '../lib/middleware/secured.js'
+import models from '../models/index.js'
 const router  = Router()
 
 const mediaOutlets = [

@@ -1,15 +1,15 @@
 // routes/auth.js
-import models from '../models'
+import models from '../models/index.js'
 
-var express = require('express')
-var router = express.Router()
-var passport = require('passport')
-var dotenv = require('dotenv')
-var util = require('util')
-var url = require('url')
-var querystring = require('querystring')
+import express from 'express'
+import passport from 'passport'
+import dotenv  from 'dotenv'
+import util from 'util'
+import url from 'url'
+import querystring from 'querystring'
 
 dotenv.config()
+var router = express.Router()
 
 // Perform the login, after login Auth0 will redirect to callback
 router.get(
@@ -95,4 +95,4 @@ router.get('/logout', (req, res) => {
   res.redirect(logoutURL)
 })
 
-module.exports = router
+export default router

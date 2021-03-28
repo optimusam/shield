@@ -1,15 +1,23 @@
 import Sequelize from 'sequelize';
-
+import dotenv from 'dotenv';
+import userModel from './user.js'
+import fileModel from './file.js'
+import fileQueueModel from './fileQueue.js'
+dotenv.config()
 const sequelize = new Sequelize(
-    process.env.HEROKU_POSTGRESQL_URL,
+    process.env.DATABASE_URL,
     {   
         host: process.env.HEROKU_POSTGRESQL_HOST,
         port: 5432,
         dialect: 'postgres',
         protocol: 'postgres',
         dialectOptions: {
-            ssl: true
-        }   
+            ssl: {
+                require: true,
+                rejectUnauthorized: false
+            }
+        },
+        logging: false   
     },
 );
 sequelize
@@ -22,9 +30,9 @@ sequelize
     });
 
 const models = {
-    User: sequelize.import('./user'),
-    File: sequelize.import('./file'),
-    FileQueue: sequelize.import('./fileQueue')
+    User: userModel(sequelize, Sequelize.DataTypes),
+    File: fileModel(sequelize, Sequelize.DataTypes),
+    FileQueue: fileQueueModel(sequelize, Sequelize.DataTypes)
 };
 
 Object.keys(models).forEach(key => {
