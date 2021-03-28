@@ -78,21 +78,21 @@ router.get('/callback', function(req, res, next) {
 router.get('/logout', (req, res) => {
   req.logout()
 
-  var returnTo = req.protocol + '://' + req.hostname
-  var port = req.connection.localPort
-  if (port !== undefined && port !== 80 && port !== 443) {
-    returnTo += ':' + port
-  }
-  var logoutURL = new url.URL(
-    util.format('https://%s/v2/logout', process.env.AUTH0_DOMAIN)
-  )
-  var searchString = querystring.stringify({
-    client_id: process.env.AUTH0_CLIENT_ID,
-    returnTo: returnTo
-  })
-  logoutURL.search = searchString
+//   var returnTo = req.protocol + '://' + req.hostname
+//   var port = req.connection.localPort
+//   if (port !== undefined && port !== 80 && port !== 443) {
+//     returnTo += ':' + port
+//   }
+//   var logoutURL = new url.URL(
+//     util.format('https://%s/v2/logout', process.env.AUTH0_DOMAIN)
+//   )
+//   var searchString = querystring.stringify({
+//     client_id: process.env.AUTH0_CLIENT_ID,
+//     returnTo: returnTo
+//   })
+//   logoutURL.search = searchString
 
-  res.redirect(logoutURL)
+  res.redirect('/')
 })
 
 export default router
