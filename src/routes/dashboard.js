@@ -6,31 +6,31 @@ const router  = Router()
 const mediaOutlets = [
     {
         name: "NDTV India",
-        email: "legal@ndtv.com"
+        email: "sameergiri1997@gmail.com"
     },
     {
         name: "Alt News",
-        email: "contact@altnews.in"
+        email: "sameergiri1997@gmail.com"
     },
     {
         name: "The Wire",
-        email: "editorial@thewire.in"
+        email: "sameergiri1997@gmail.com"
     },
     {
         name: "Zee News",
-        email: "inews@zeemedia.esselgroup.com "
+        email: "sameergiri1997@gmail.com "
     },
     {
         name: "India TV",
-        email: "mail@indiatvnews.com"
+        email: "sameergiri1997@gmail.com"
     },
     {
         name: "Aaj Tak",
-        email: "info@aajtak.com"
+        email: "sameergiri1997@gmail.com"
     },
     {
         name: "ABP News",
-        email: "kishanr@abpnews.in"
+        email: "sameergiri1997@gmail.com"
     }
 ]
 

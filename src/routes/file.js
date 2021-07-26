@@ -9,6 +9,9 @@ router.post('/file', secured(), async (req, res) => {
     const link = req.body.link
     const emailTo  = req.body.emailTo
     try {
+        if(emailTo.length != 3) {
+            throw new Error("Please select 3 media houses");
+        }
         await models.File.create({
             vaultname: vaultname, 
             link: link,
@@ -19,7 +22,9 @@ router.post('/file', secured(), async (req, res) => {
         res.redirect('/dashboard')
     }
     catch (err) {
-        res.json({ message: "Error" })
+        req.flash('message', err.message)
+        res.redirect('/dashboard')
+        // res.json({ message: "Error ->" + err })
     }
 })
 
