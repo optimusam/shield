@@ -10,26 +10,26 @@ const mediaOutlets = [
     },
     {
         name: "Alt News",
-        email: "sameergiri1997@gmail.com"
+        email: "optimusam97@gmail.com"
     },
     {
         name: "The Wire",
+        email: "sameergiri.py@gmail.com"
+    },
+    {
+        name: "Zee News(dummy data)",
         email: "sameergiri1997@gmail.com"
     },
     {
-        name: "Zee News",
-        email: "sameergiri1997@gmail.com "
-    },
-    {
-        name: "India TV",
+        name: "India TV (dummy data)",
         email: "sameergiri1997@gmail.com"
     },
     {
-        name: "Aaj Tak",
+        name: "Aaj Tak(dummy data)",
         email: "sameergiri1997@gmail.com"
     },
     {
-        name: "ABP News",
+        name: "ABP News(dummy data)",
         email: "sameergiri1997@gmail.com"
     }
 ]

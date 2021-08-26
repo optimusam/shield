@@ -130,7 +130,7 @@ setInterval(async () => {
       });
     await Promise.all(promises);
    } catch (e) {
-      console.error('could not resolve promise', e);
+      console.error('could not resolve promise', JSON.stringify(e));
     }
 }, 1680000)
 
